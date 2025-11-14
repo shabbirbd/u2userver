@@ -13,7 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// DB Connection
 connectDB();
 
 const server = http.createServer(app);
