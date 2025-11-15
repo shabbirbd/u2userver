@@ -5,8 +5,10 @@ import dotenv from "dotenv";
 import { Server } from "socket.io";
 import { connectDB } from "./src/config/db";
 import Conversation from "./src/models/Conversation";
+import conversationRoutes from "./src/routes/conversationRoutes";
 
 dotenv.config();
+connectDB();
 
 const allowedOrigins = [
     "http://localhost:3000",
@@ -22,8 +24,9 @@ app.use(
     })
 );
 app.use(express.json());
+app.use(conversationRoutes);
 
-connectDB();
+
 
 const server = http.createServer(app);
 
@@ -32,6 +35,7 @@ const io = new Server(server, {
         origin: allowedOrigins,
     },
 });
+
 
 // Track online users
 const onlineUsers = new Map<string, string>();
