@@ -1,27 +1,53 @@
-function hslToHex(h: number, s: number, l: number): string {
-  s /= 100;
-  l /= 100;
-  const k = (n: number) => (n + h / 30) % 12;
-  const a = s * Math.min(l, 1 - l);
-  const f = (n: number) => {
-    const color = l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-    return Math.round(255 * color)
-      .toString(16)
-      .padStart(2, "0");
-  };
-  return `#${f(0)}${f(8)}${f(4)}`;
-}
+const generateRandomColorPair = () => {
+    const colorPairs = [
+        {
+            dark: '#2b6cb0',
+            light: '#bee3f8',
+        },
+        {
+            dark: '#c53030',
+            light: '#feb2b2',
+        },
+        {
+            dark: '#38a169',
+            light: '#c6f6d5',
+        },
+        {
+            dark: '#6b46c1',
+            light: '#e9d8fd',
+        },
+        {
+            dark: '#b7791f',
+            light: '#faf089',
+        },
+        {
+            dark: '#2c7a7b',
+            light: '#b2f5ea',
+        },
+        {
+            dark: '#9c4221',
+            light: '#fbd38d',
+        },
+        {
+            dark: '#44337a',
+            light: '#d6bcfa',
+        },
+        {
+            dark: '#744210',
+            light: '#ffe29a',
+        },
+        {
+            dark: '#553c9a',
+            light: '#f3e8ff',
+        },
+        {
+            dark: '#22543d',
+            light: '#e6fffa',
+        },
+    ];
 
-export function generateRandomColorPair(): { dark: string; light: string } {
-  const hue = Math.floor(Math.random() * 360);
-  // Saturation chosen to give pleasant colors
-  const sat = 60;
-  // Dark variant (for accents/backgrounds)
-  const dark = hslToHex(hue, sat, 30);
-  // Light variant (for background/text contrast)
-  const light = hslToHex(hue, sat, 92);
-
-  return { dark, light };
-}
+    const idx = Math.floor(Math.random() * colorPairs.length);
+    return colorPairs[idx];
+};
 
 export default generateRandomColorPair;

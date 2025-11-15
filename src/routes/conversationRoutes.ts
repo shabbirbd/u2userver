@@ -1,6 +1,6 @@
 import { Router } from "express";
 import Conversation from "../models/Conversation";
-import { generateRandomColorPair } from "../utils/colorUtils";
+import generateRandomColorPair from "../utils/colorUtils";
 
 const router = Router();
 
