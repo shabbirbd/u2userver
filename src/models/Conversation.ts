@@ -26,6 +26,7 @@ export interface IConversation extends Document {
   isGroup: boolean;
   groupName?: string;
   groupImage?: string;
+  colors?: { dark: string; light: string}
 }
 
 const MemberSchema = new Schema<Member>({
@@ -54,6 +55,7 @@ const ConversationSchema = new Schema<IConversation>({
   isGroup: { type: Boolean, default: false },
   groupName: String,
   groupImage: String,
+  colors: {type: Object, default: {dare: '#3d5f8f', light: '#9ec5fa'}}
 }, {
     timestamps: true
 });

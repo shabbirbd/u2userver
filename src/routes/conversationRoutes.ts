@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Conversation from "../models/Conversation";
+import { generateRandomColorPair } from "../utils/colorUtils";
 
 const router = Router();
 
@@ -42,14 +43,11 @@ router.get("/conversation/:id", async (req, res) => {
 /**
  * 🟦 CREATE (or RETURN EXISTING) conversation between 2 users
  * Used when user opens a chat for the first time
- */
+*/
 router.post("/conversation/start", async (req, res) => {
     try {
         const { sender, receiver } = req.body;
-        // sender: Member object
-        // receiver: Member object
 
-        // check if conversation already exists
         let conversation = await Conversation.findOne({
             isGroup: false,
             members: {
@@ -61,10 +59,12 @@ router.post("/conversation/start", async (req, res) => {
         });
 
         if (!conversation) {
+            const newColors = generateRandomColorPair();
             conversation = await Conversation.create({
                 members: [sender, receiver],
                 messages: [],
-                isGroup: false
+                isGroup: false,
+                colors: newColors
             });
         }
 
@@ -77,7 +77,7 @@ router.post("/conversation/start", async (req, res) => {
 
 /**
  * 🟦 SEND MESSAGE to conversation
- */
+*/
 router.post("/conversation/:id/message", async (req, res) => {
     try {
         const { senderId, text, media } = req.body;
