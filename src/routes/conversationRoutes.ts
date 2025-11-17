@@ -111,14 +111,12 @@ router.post("/conversation/:id/message", async (req, res) => {
  */
 router.post("/conversation/group", async (req, res) => {
     try {
-        const { members, groupName, groupImage } = req.body;
+        const { members } = req.body;
         // members: Member[]
 
         const conversation = await Conversation.create({
             members,
             isGroup: true,
-            groupName,
-            groupImage,
             messages: []
         });
 
