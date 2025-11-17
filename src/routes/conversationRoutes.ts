@@ -111,13 +111,14 @@ router.post("/conversation/:id/message", async (req, res) => {
  */
 router.post("/conversation/group", async (req, res) => {
     try {
-        const { members } = req.body;
+        const { members, message } = req.body;
         // members: Member[]
         const newColors = generateRandomColorPair();
+        let messages:any[] = message?.senderId?.length > 0 ? [message] : [];
         const conversation = await Conversation.create({
             members,
             isGroup: true,
-            messages: [],
+            messages: messages,
             colors: newColors
         });
 
