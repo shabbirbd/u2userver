@@ -113,11 +113,12 @@ router.post("/conversation/group", async (req, res) => {
     try {
         const { members } = req.body;
         // members: Member[]
-
+        const newColors = generateRandomColorPair();
         const conversation = await Conversation.create({
             members,
             isGroup: true,
-            messages: []
+            messages: [],
+            colors: newColors
         });
 
         res.json(conversation);
