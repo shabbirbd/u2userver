@@ -167,9 +167,26 @@ router.post("/conversation/updateMembers", async (req, res) => {
         res.json(updated);
     } catch (error) {
         console.error("Seen Error:", error);
-        res.status(500).json({ error: "Failed to update seen status" });
+        res.status(500).json({ error: "Failed to update conversation" });
     }
 });
 // update group members
+
+// delete conversation
+router.delete("/conversation/delete", async (req, res) => {
+    try {
+        const { convId } = req.body;
+
+        const updated = await Conversation.deleteOne(
+            { _id: convId }
+        );
+
+        res.json(updated);
+    } catch (error) {
+        console.error("Seen Error:", error);
+        res.status(500).json({ error: "Failed to delete" });
+    }
+});
+// delete conversation
 
 export default router;
