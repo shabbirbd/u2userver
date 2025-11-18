@@ -151,4 +151,25 @@ router.post("/conversation/:id/seen", async (req, res) => {
     }
 });
 
+
+// update group members
+router.post("/conversation/updateMembers", async (req, res) => {
+    try {
+        const { updatedConv } = req.body;
+
+        const updated = await Conversation.updateOne(
+            { _id: updatedConv._id },
+            {
+                $set: updatedConv
+            }
+        );
+
+        res.json(updated);
+    } catch (error) {
+        console.error("Seen Error:", error);
+        res.status(500).json({ error: "Failed to update seen status" });
+    }
+});
+// update group members
+
 export default router;
