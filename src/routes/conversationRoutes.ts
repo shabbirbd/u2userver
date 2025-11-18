@@ -94,7 +94,7 @@ router.post("/conversation/:id/message", async (req, res) => {
         const updated = await Conversation.findByIdAndUpdate(
             req.params.id,
             {
-                $push: { messages: message },
+                $push: { messages: message }, 
                 $set: { updatedAt: new Date() }
             },
             { new: true }
