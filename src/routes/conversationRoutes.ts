@@ -46,7 +46,7 @@ router.get("/conversation/:id", async (req, res) => {
 */
 router.post("/conversation/start", async (req, res) => {
     try {
-        const { sender, receiver, creator } = req.body;
+        const { sender, receiver, creator, message } = req.body;
 
         let conversation = await Conversation.findOne({
             isGroup: false,
@@ -60,9 +60,10 @@ router.post("/conversation/start", async (req, res) => {
 
         if (!conversation) {
             const newColors = generateRandomColorPair();
+            let messages:any[] = message?.senderId?.length > 0 ? [message] : [];
             conversation = await Conversation.create({
                 members: [sender, receiver],
-                messages: [],
+                messages: messages,
                 isGroup: false,
                 colors: newColors,
                 creator: creator
