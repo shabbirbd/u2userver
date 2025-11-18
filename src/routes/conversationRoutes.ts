@@ -46,7 +46,7 @@ router.get("/conversation/:id", async (req, res) => {
 */
 router.post("/conversation/start", async (req, res) => {
     try {
-        const { sender, receiver } = req.body;
+        const { sender, receiver, creator } = req.body;
 
         let conversation = await Conversation.findOne({
             isGroup: false,
@@ -64,7 +64,8 @@ router.post("/conversation/start", async (req, res) => {
                 members: [sender, receiver],
                 messages: [],
                 isGroup: false,
-                colors: newColors
+                colors: newColors,
+                creato: creator
             });
         }
 
@@ -111,7 +112,7 @@ router.post("/conversation/:id/message", async (req, res) => {
  */
 router.post("/conversation/group", async (req, res) => {
     try {
-        const { members, message } = req.body;
+        const { members, message, creator } = req.body;
         // members: Member[]
         const newColors = generateRandomColorPair();
         let messages:any[] = message?.senderId?.length > 0 ? [message] : [];
@@ -119,9 +120,9 @@ router.post("/conversation/group", async (req, res) => {
             members,
             isGroup: true,
             messages: messages,
-            colors: newColors
+            colors: newColors,
+            creator: creator
         });
-
         res.json(conversation);
     } catch (error) {
         console.error("Create Group Error:", error);
