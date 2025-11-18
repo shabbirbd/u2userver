@@ -65,7 +65,7 @@ router.post("/conversation/start", async (req, res) => {
                 messages: [],
                 isGroup: false,
                 colors: newColors,
-                creato: creator
+                creator: creator
             });
         }
 
