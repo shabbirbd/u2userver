@@ -158,16 +158,20 @@ router.post("/conversation/updateMembers", async (req, res) => {
     try {
         const { updatedConv } = req.body;
 
-        const updated = await Conversation.updateOne(
+        // Use findOneAndUpdate to get the actual document back
+        const conversation = await Conversation.findOneAndUpdate(
             { _id: updatedConv._id },
-            {
-                $set: updatedConv
-            }
+            { $set: updatedConv },
+            { new: true } // This returns the updated document, not the old one
         );
 
-        res.json(updated);
+        if (!conversation) {
+            return res.status(404).json({ error: "Conversation not found" });
+        }
+
+        res.json(conversation); // Now returns the full DMConversation object
     } catch (error) {
-        console.error("Seen Error:", error);
+        console.error("Update Members Error:", error);
         res.status(500).json({ error: "Failed to update conversation" });
     }
 });
